@@ -259,7 +259,6 @@ app.get("/", checkNotAuthenticated, (req, res) => {
                                                                                   scr_2010_trabalho,
                                                                                   scr_2010_divulga,
                                                                                   ncm_produto,
-                                                                                  dadosCSV,
                                                                                 }
                                                                               );
                                                                             }
@@ -523,18 +522,8 @@ app.post("/", (req, res) => {
     const csvExporter = new ExportToCsv(options);
     const csvData = csvExporter.generateCsv(dados, true);
 
-    //let arquivoJson = JSON.stringify(csvExporter)
-    //fs.writeFileSync("tabela.csv", csvData);
-    //res.download("tabela.csv");
-
-    //console.log('antes: ' + dadosCSV)
-    //res.json(csvData);
-    //dadosCSV = ejs.render(csvData, {dadosCSV: csvData});
-    
-    dadosCSV = csvData;
-    res.redirect('/');
-    //res.set('text/csv').send(teste);
-    //console.log('Depois: ' + teste);
+    fs.writeFileSync("tabela.csv", csvData);
+    res.download("tabela.csv");
     return;
   });
 });
